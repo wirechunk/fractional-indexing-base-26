@@ -40,12 +40,12 @@ const zeroth = generateKeyBetween(null, first); // "Zz"
 const secondAndHalf = generateKeyBetween(second, third); // "a1V"
 ```
 
-### `generateNKeysBetween`
+### `generateKeysBetween`
 
 Use this when generating multiple keys at some known position, as it spaces out indexes more evenly and leads to shorter keys.
 
 ```ts
-generateNKeysBetween(
+generateKeysBetween(
   a: string | null | undefined, // start
   b: string | null | undefined, // end
   n: number // number of keys to generate evenly between start and end
@@ -54,20 +54,19 @@ generateNKeysBetween(
 ```
 
 ```ts
-import { generateNKeysBetween } from 'fractional-indexing';
+import { generateKeysBetween } from 'fractional-indexing';
 
-const first = generateNKeysBetween(null, null, 2); // ['a0', 'a1']
+const first = generateKeysBetween(null, null, 2); // ['a0', 'a1']
 
 // Insert two keys after 2nd
-generateNKeysBetween(first[1], null, 2); // ['a2', 'a3']
+generateKeysBetween(first[1], null, 2); // ['a2', 'a3']
 
 // Insert two keys before 1st
-generateNKeysBetween(null, first[0], 2); // ['Zy', 'Zz']
+generateKeysBetween(null, first[0], 2); // ['Zy', 'Zz']
 
 // Insert two keys in between 1st and 2nd (midpoints)
-generateNKeysBetween(second, third, 2); // ['a0G', 'a0V']
+generateKeysBetween(second, third, 2); // ['a0G', 'a0V']
 ```
-
 
 ## Other Languages
 

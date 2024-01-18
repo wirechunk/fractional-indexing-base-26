@@ -3,41 +3,42 @@
   "version": "3.2.0",
   "description": "Provides functions for generating ordering strings",
   "type": "module",
-  "main": "src/index.js",
+  "main": "src/lib.ts",
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
   },
   "scripts": {
-    "build-dts": "rm -f src/*.d.ts && tsc --emitDeclarationOnly && prettier src/*.d.ts --write",
-    "build": "npm run build-dts",
-    "format": "prettier *.json src/ --write",
-    "prepare": "npm run build && npm run format",
-    "prepack": "npm run prepare",
-    "test": "node src/test.js"
+    "build": "rm -f dist && tsc",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "./node_modules/.bin/tsc --noEmit",
+    "test": "NODE_OPTIONS='--loader ts-node/esm' node src/lib.test.ts"
   },
   "keywords": [
     "fractional",
     "indexing",
     "ordering",
-    "order"
+    "order",
+    "sorting"
   ],
-  "homepage": "https://github.com/rocicorp/fractional-indexing#readme",
+  "homepage": "https://github.com/wirechunk/fractional-indexing#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rocicorp/fractional-indexing.git"
+    "url": "https://github.com/wirechunk/fractional-indexing.git"
   },
   "bugs": {
-    "url": "https://github.com/rocicorp/fractional-indexing/issues"
+    "url": "https://github.com/wirechunk/fractional-indexing/issues"
   },
-  "author": "arv@rocicorp.dev",
   "license": "CC0-1.0",
   "devDependencies": {
-    "prettier": "^2.6.0",
-    "typescript": "^4.6.2"
+    "prettier": "^3.2.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "exports": "./src/index.js",
   "files": [
-    "src/index.js",
-    "src/index.d.ts"
-  ]
+    "src/lib.ts",
+    "src/lib.d.ts"
+  ],
+  "types": "./src/lib.d.ts"
 }
