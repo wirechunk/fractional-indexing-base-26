@@ -37,8 +37,7 @@
   },
   "exports": "./src/index.js",
   "files": [
-    "src/lib.ts",
-    "src/lib.d.ts"
+    "dist"
   ],
   "types": "./src/lib.d.ts"
 }
