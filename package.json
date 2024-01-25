@@ -4,9 +4,6 @@
   "description": "Provides functions for generating ordering strings",
   "type": "module",
   "main": "src/lib.ts",
-  "engines": {
-    "node": "^14.13.1 || >=16.0.0"
-  },
   "scripts": {
     "build": "rm -f dist && tsc",
     "format": "prettier --write .",
@@ -35,7 +32,10 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
-  "exports": "./src/index.js",
+  "exports": {
+    "import": ".dist/lib.js",
+    "types": ".dist/lib.d.ts"
+  },
   "files": [
     "dist"
   ],
