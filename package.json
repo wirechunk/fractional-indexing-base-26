@@ -18,13 +18,13 @@
     "order",
     "sorting"
   ],
-  "homepage": "https://github.com/wirechunk/fractional-indexing#readme",
+  "homepage": "https://github.com/wirechunk/fractional-indexing-base-26#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wirechunk/fractional-indexing.git"
+    "url": "https://github.com/wirechunk/fractional-indexing-base-26.git"
   },
   "bugs": {
-    "url": "https://github.com/wirechunk/fractional-indexing/issues"
+    "url": "https://github.com/wirechunk/fractional-indexing-base-26/issues"
   },
   "license": "CC0-1.0",
   "devDependencies": {
