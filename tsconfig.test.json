@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
-    "outDir": "dist",
+    "outDir": "dist"
   },
-  "include": ["src/*.ts"],
+  "include": ["src/*.ts"]
 }
