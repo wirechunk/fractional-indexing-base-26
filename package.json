@@ -1,43 +1,44 @@
 {
-  "name": "fractional-indexing",
-  "version": "3.2.0",
+  "name": "fractional-indexing-base-26",
+  "version": "1.0.0",
   "description": "Provides functions for generating ordering strings",
   "type": "module",
-  "main": "src/index.js",
-  "engines": {
-    "node": "^14.13.1 || >=16.0.0"
-  },
+  "main": "src/lib.ts",
   "scripts": {
-    "build-dts": "rm -f src/*.d.ts && tsc --emitDeclarationOnly && prettier src/*.d.ts --write",
-    "build": "npm run build-dts",
-    "format": "prettier *.json src/ --write",
-    "prepare": "npm run build && npm run format",
-    "prepack": "npm run prepare",
-    "test": "node src/test.js"
+    "build": "rm -r dist && tsc",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "./node_modules/.bin/tsc --noEmit --project tsconfig.test.json",
+    "test": "vitest --run"
   },
   "keywords": [
     "fractional",
     "indexing",
     "ordering",
-    "order"
+    "order",
+    "sorting"
   ],
-  "homepage": "https://github.com/rocicorp/fractional-indexing#readme",
+  "homepage": "https://github.com/wirechunk/fractional-indexing-base-26#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rocicorp/fractional-indexing.git"
+    "url": "https://github.com/wirechunk/fractional-indexing-base-26.git"
   },
   "bugs": {
-    "url": "https://github.com/rocicorp/fractional-indexing/issues"
+    "url": "https://github.com/wirechunk/fractional-indexing-base-26/issues"
   },
-  "author": "arv@rocicorp.dev",
   "license": "CC0-1.0",
   "devDependencies": {
-    "prettier": "^2.6.0",
-    "typescript": "^4.6.2"
+    "prettier": "^3.2.4",
+    "vitest": "^1.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
-  "exports": "./src/index.js",
+  "exports": {
+    "import": "./dist/lib.js",
+    "types": "./dist/lib.d.ts"
+  },
   "files": [
-    "src/index.js",
-    "src/index.d.ts"
-  ]
+    "dist"
+  ],
+  "types": "./src/lib.d.ts"
 }
