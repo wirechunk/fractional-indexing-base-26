@@ -5,11 +5,11 @@
   "type": "module",
   "main": "src/lib.ts",
   "scripts": {
-    "build": "rm -f dist && tsc",
+    "build": "rm -r dist && tsc",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "./node_modules/.bin/tsc --noEmit",
-    "test": "NODE_OPTIONS='--loader ts-node/esm' node src/lib.test.ts"
+    "typecheck": "./node_modules/.bin/tsc --noEmit --project tsconfig.test.json",
+    "test": "vitest --run"
   },
   "keywords": [
     "fractional",
@@ -29,6 +29,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "prettier": "^3.2.4",
+    "vitest": "^1.2.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },

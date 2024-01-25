@@ -125,12 +125,12 @@ const decrementInteger = (x) => {
     return head + digs.join('');
 };
 /**
- * Returns the key that is halfway between the two given keys, which are expected to be 15 characters long and contain
- * only lowercase English letters. Note that, if both a and b are non-null, a must sort lexicographically before b.
+ * Returns the key that is halfway between the two given keys, which are expected to have the format that this library produces.
+ * If both a and b are non-null, a must sort lexicographically before b.
  */
 export function generateKeyBetween(a, b) {
     if (a !== null && b !== null && a >= b) {
-        throw new Error(a + ' >= ' + b);
+        throw new Error(`expected ${a} >= ${b}`);
     }
     if (a === null) {
         if (b === null) {
@@ -172,10 +172,10 @@ export function generateKeyBetween(a, b) {
 }
 /**
  * Returns an array of n distinct keys in sorted order.
- * If a and b are both null, returns [na, nb, ...].
+ * If a and b are both null, keys start at the middle of the possible key range, so it returns [na, nb, ...].
  * If only a is null, returns the "integer" key immediately before b.
  * If only b is null, returns the "integer" key immediately after a.
- * Otherwise, returns (short) keys between a and b.
+ * Otherwise, returns (short) keys strictly between a and b.
  */
 export function generateKeysBetween(a, b, n) {
     if (n === 0) {

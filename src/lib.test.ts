@@ -1,58 +1,107 @@
+import { describe, expect, test } from 'vitest';
+
 import { generateKeyBetween, generateKeysBetween } from './lib.js';
 
-const test = (a: string | null, b: string | null, expected: string) => {
-  let act: string;
-  try {
-    act = generateKeyBetween(a, b);
-  } catch (e) {
-    act = (e as Error).message;
-  }
+describe('generateKeyBetween', () => {
+  test.each([
+    { a: null, b: null, expected: 'na' },
+    { a: null, b: 'na', expected: 'mz' },
+    { a: null, b: 'mz', expected: 'my' },
+    { a: 'mz', b: null, expected: 'na' },
+    { a: 'na', b: null, expected: 'nb' },
+    { a: 'ma', b: null, expected: 'mb' },
+    { a: 'na', b: 'nb', expected: 'nan' },
+    { a: 'accccccccccccc', b: 'accccccccccccd', expected: 'acccccccccccccn' },
+    { a: 'mz', b: 'na', expected: 'mzn' },
+    { a: 'mz', b: 'nb', expected: 'na' },
+    { a: null, b: 'laa', expected: 'kzzz' },
+    { a: 'nz', b: null, expected: 'oaa' },
+    { a: 'nf', b: 'ng', expected: 'nfn' },
+    { a: 'prrr', b: 'prrs', expected: 'prrrn' },
+    { a: 'kfff', b: 'kffg', expected: 'kfffn' },
+    { a: 'mz', b: 'nan', expected: 'na' },
+    { a: 'na', b: 'nan', expected: 'nah' },
+    { a: 'nah', b: 'nan', expected: 'nak' },
+    { a: 'zzzzzzzzzzzzzy', b: null, expected: 'zzzzzzzzzzzzzz' },
+    { a: 'zzzzzzzzzzzzzz', b: null, expected: 'zzzzzzzzzzzzzzn' },
+  ])('$a, $b', ({ a, b, expected }) => {
+    expect(generateKeyBetween(a, b)).toBe(expected);
+  });
 
-  console.assert(expected === act, `a: ${a}; b: ${b}; expected: ${expected}; actual: ${act}`);
-};
+  test('invalid integer part of order key', () => {
+    expect(() => generateKeyBetween('aaa', null)).toThrow('invalid integer part of order key: aaa');
+  });
 
-test(null, null, 'na');
-test(null, 'na', 'mz');
-test(null, 'mz', 'my');
-test('mz', null, 'na');
-test('na', null, 'nb');
-test('ma', null, 'mb');
-test('na', 'nb', 'nan');
-test('accccccccccccc', 'accccccccccccd', 'acccccccccccccn');
-test('mz', 'na', 'mzn');
-test('mz', 'nb', 'na');
-test(null, 'laa', 'kzzz');
-test('nz', null, 'oaa');
-test('nf', 'ng', 'nfn');
-test('prrr', 'prrs', 'prrrn');
-test('kfff', 'kffg', 'kfffn');
-test('mz', 'nan', 'na');
-test('na', 'nan', 'nah');
-test('nah', 'nan', 'nak');
-test('zzzzzzzzzzzzzy', null, 'zzzzzzzzzzzzzz');
-test('zzzzzzzzzzzzzz', null, 'zzzzzzzzzzzzzzn');
-test('aaa', null, 'invalid integer part of order key: aaa');
-test('0', '1', 'invalid order key head: 0');
-test('nb', 'na', 'nb >= na');
+  test('invalid order key head', () => {
+    expect(() => generateKeyBetween('0', '1')).toThrow('invalid order key head: 0');
+  });
 
-const testN = (a: string | null, b: string | null, n: number, expected: string) => {
-  let act: string;
-  try {
-    act = generateKeysBetween(a, b, n).join(' ');
-  } catch (e) {
-    act = (e as Error).message;
-  }
+  test('a == b', () => {
+    expect(() => generateKeyBetween('na', 'na')).toThrow('expected na >= na');
+  });
 
-  console.assert(expected === act, `${expected} === ${act}`);
-};
+  test('a > b', () => {
+    expect(() => generateKeyBetween('nb', 'na')).toThrow('expected nb >= na');
+  });
+});
 
-testN(null, null, 5, 'na nb nc nd ne');
-testN('na', null, 10, 'nb nc nd ne nf ng nh ni nj nk');
-testN(null, 'na', 5, 'mv mw mx my mz');
-testN(
-  'na',
-  'nb',
-  20,
-  'nab nac nae naf nag nah nai naj nak nam nan nao nap nar nat nau nav naw nax naz'
-);
-testN('na', 'nb', 27, 'nab nac nad nae naf nag nah nai naj najn nak nal nam nan nao nap naq nar nas nat nau nav naw nawn nax nay naz');
+describe('generateKeysBetween', () => {
+  test('null, null, 5', () => {
+    expect(generateKeysBetween(null, null, 5)).toEqual(['na', 'nb', 'nc', 'nd', 'ne']);
+  });
+
+  test('null, null, 0', () => {
+    expect(generateKeysBetween(null, null, 0)).toEqual([]);
+  });
+
+  test('"na", null, 10', () => {
+    expect(generateKeysBetween('na', null, 10)).toEqual([
+      'nb',
+      'nc',
+      'nd',
+      'ne',
+      'nf',
+      'ng',
+      'nh',
+      'ni',
+      'nj',
+      'nk',
+    ]);
+  });
+
+  test('null, "na", 5', () => {
+    expect(generateKeysBetween(null, 'na', 5)).toEqual(['mv', 'mw', 'mx', 'my', 'mz']);
+  });
+
+  test('"na", "nb", 27', () => {
+    expect(generateKeysBetween('na', 'nb', 27)).toEqual([
+      'nab',
+      'nac',
+      'nad',
+      'nae',
+      'naf',
+      'nag',
+      'nah',
+      'nai',
+      'naj',
+      'najn',
+      'nak',
+      'nal',
+      'nam',
+      'nan',
+      'nao',
+      'nap',
+      'naq',
+      'nar',
+      'nas',
+      'nat',
+      'nau',
+      'nav',
+      'naw',
+      'nawn',
+      'nax',
+      'nay',
+      'naz',
+    ]);
+  });
+});

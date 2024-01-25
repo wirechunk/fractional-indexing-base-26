@@ -10,5 +10,5 @@
     "target": "ES2022",
     "outDir": "dist",
   },
-  "include": ["src/lib.ts"],
+  "include": ["src/*.ts"],
 }
