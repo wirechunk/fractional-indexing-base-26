@@ -6,7 +6,15 @@ This is based on [Implementing Fractional Indexing
 
 Fractional indexing is a technique to create an ordering that can be used for [Realtime Editing of Ordered Sequences](https://www.figma.com/blog/realtime-editing-of-ordered-sequences/).
 
-This implementation includes variable-length integers, and the prepend/append optimization described in David's article.
+This implementation includes variable-length integers and the prepend/append optimization described in David's article.
+
+## Install
+
+```sh
+npm i fractional-indexing-base-26
+```
+
+This package is available on npm as [fractional-indexing-base-26](https://www.npmjs.com/package/fractional-indexing-base-26).
 
 ## API
 
@@ -16,28 +24,27 @@ Generate a single key in between two points.
 
 ```ts
 generateKeyBetween(
-  a: string | null | undefined, // start
-  b: string | null | undefined, // end
-  digits?: string | undefined = BASE_62_DIGITS, // optional character encoding
+  a: string | null, // start
+  b: string | null, // end
 ): string;
 ```
 
 ```ts
-import { generateKeyBetween } from 'fractional-indexing';
+import { generateKeyBetween } from 'fractional-indexing-base-26';
 
-const first = generateKeyBetween(null, null); // "a0"
+const first = generateKeyBetween(null, null); // "na"
 
 // Insert after 1st
-const second = generateKeyBetween(first, null); // "a1"
+const second = generateKeyBetween(first, null); // "nb"
 
 // Insert after 2nd
-const third = generateKeyBetween(second, null); // "a2"
+const third = generateKeyBetween(second, null); // "nc"
 
 // Insert before 1st
-const zeroth = generateKeyBetween(null, first); // "Zz"
+const zeroth = generateKeyBetween(null, first); // "mz"
 
 // Insert in between 2nd and 3rd (midpoint)
-const secondAndHalf = generateKeyBetween(second, third); // "a1V"
+const secondAndHalf = generateKeyBetween(second, third); // "nbn"
 ```
 
 ### `generateKeysBetween`
@@ -48,32 +55,21 @@ Use this when generating multiple keys at some known position, as it spaces out 
 generateKeysBetween(
   a: string | null | undefined, // start
   b: string | null | undefined, // end
-  n: number // number of keys to generate evenly between start and end
-  digits?: string | undefined = BASE_62_DIGITS, // optional character encoding
+  n: number, // number of keys to generate between start and end
 ): string[];
 ```
 
 ```ts
-import { generateKeysBetween } from 'fractional-indexing';
+import { generateKeysBetween } from 'fractional-indexing-base-26';
 
-const first = generateKeysBetween(null, null, 2); // ['a0', 'a1']
+const first = generateKeysBetween(null, null, 2); // ['na', 'nb']
 
 // Insert two keys after 2nd
-generateKeysBetween(first[1], null, 2); // ['a2', 'a3']
+generateKeysBetween('na', null, 2); // ['nb', 'nc']
 
-// Insert two keys before 1st
-generateKeysBetween(null, first[0], 2); // ['Zy', 'Zz']
+// Insert three keys before 1st
+generateKeysBetween(null, 'na', 3); // ['mx', 'my', 'mz']
 
-// Insert two keys in between 1st and 2nd (midpoints)
-generateKeysBetween(second, third, 2); // ['a0G', 'a0V']
+// Insert two keys in between two keys
+generateKeysBetween('na', 'nb', 2); // ['nah', 'nan']
 ```
-
-## Other Languages
-
-These should be byte-for-byte compatible.
-
-| Language | Repo                                                  |
-| -------- | ----------------------------------------------------- |
-| Go       | https://github.com/rocicorp/fracdex                   |
-| Python   | https://github.com/httpie/fractional-indexing-python  |
-| Kotlin   | https://github.com/darvelo/fractional-indexing-kotlin |
