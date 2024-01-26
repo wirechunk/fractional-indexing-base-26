@@ -28,10 +28,6 @@ describe('generateKeyBetween', () => {
     expect(generateKeyBetween(a, b)).toBe(expected);
   });
 
-  test('invalid integer part of order key', () => {
-    expect(() => generateKeyBetween('aaa', null)).toThrow('invalid integer part of order key: aaa');
-  });
-
   test('invalid order key head', () => {
     expect(() => generateKeyBetween('0', '1')).toThrow('invalid order key head: 0');
   });

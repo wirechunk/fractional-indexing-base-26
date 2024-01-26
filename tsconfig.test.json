@@ -7,6 +7,8 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "strict": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
     "target": "ES2022",
     "outDir": "dist"
   },
