@@ -4,11 +4,11 @@
 
 export const digits = 'abcdefghijklmnopqrstuvwxyz';
 
-const zero = digits[0];
+const zero = digits[0] as 'a';
 
 const integerZero = 'na';
 
-const smallestInteger = 'a' + digits[0].repeat(13);
+const smallestInteger = 'a'.repeat(14);
 
 // `a` may be an empty string, `b` is null or a non-empty string.
 // `a < b` lexicographically if `b` is non-null.
@@ -33,11 +33,10 @@ function midpoint(a: string, b: string | null): string {
     }
   }
   // The first digits (or lack of digit) are different.
-  const digitA = a ? digits.indexOf(a[0]) : 0;
-  const digitB = b !== null ? digits.indexOf(b[0]) : digits.length;
+  const digitA = a ? digits.indexOf(a[0] as string) : 0;
+  const digitB = b ? digits.indexOf(b[0] as string) : digits.length;
   if (digitB - digitA > 1) {
-    const midDigit = Math.round(0.5 * (digitA + digitB));
-    return digits[midDigit];
+    return digits[Math.round((digitA + digitB) / 2)] as string;
   }
   // The first digits are consecutive.
   if (b && b.length > 1) {
@@ -63,25 +62,18 @@ const getIntegerLength = (head: string) => {
   throw new Error('invalid order key head: ' + head);
 };
 
-function validateInteger(int: string) {
-  if (int.length !== getIntegerLength(int[0])) {
-    throw new Error('invalid integer part of order key: ' + int);
-  }
-}
-
-const getIntegerPart = (key: string) => key.slice(0, getIntegerLength(key[0]));
+const getIntegerPart = (key: string) => key.slice(0, getIntegerLength(key[0] as string));
 
 // Note that this may return null, as there is a largest integer.
 const incrementInteger = (x: string) => {
-  validateInteger(x);
-  const [head, ...digs] = x.split('');
+  const [head, ...digs] = x.split('') as [string, ...string[]];
   let carry = true;
   for (let i = digs.length - 1; carry && i >= 0; i--) {
-    const d = digits.indexOf(digs[i]) + 1;
+    const d = digits.indexOf(digs[i] as string) + 1;
     if (d === digits.length) {
       digs[i] = zero;
     } else {
-      digs[i] = digits[d];
+      digs[i] = digits[d] as string;
       carry = false;
     }
   }
@@ -106,15 +98,14 @@ const z = digits.slice(-1);
 
 // Note that this may return null, as there is a smallest integer.
 const decrementInteger = (x: string) => {
-  validateInteger(x);
-  const [head, ...digs] = x.split('');
+  const [head, ...digs] = x.split('') as [string, ...string[]];
   let borrow = true;
   for (let i = digs.length - 1; borrow && i >= 0; i--) {
-    const d = digits.indexOf(digs[i]) - 1;
+    const d = digits.indexOf(digs[i] as string) - 1;
     if (d === -1) {
       digs[i] = z;
     } else {
-      digs[i] = digits[d];
+      digs[i] = digits[d] as string;
       borrow = false;
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "fractional-indexing-base-26",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides functions for generating ordering strings",
   "type": "module",
   "main": "src/lib.ts",
