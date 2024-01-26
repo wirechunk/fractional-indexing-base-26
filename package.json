@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/lib.ts",
   "scripts": {
-    "build": "rm -r dist && tsc",
+    "build": "rm -rf dist && tsc",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "./node_modules/.bin/tsc --noEmit --project tsconfig.test.json",
