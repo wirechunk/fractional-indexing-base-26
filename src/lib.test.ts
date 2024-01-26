@@ -11,6 +11,8 @@ describe('generateKeyBetween', () => {
     { a: 'na', b: null, expected: 'nb' },
     { a: 'ma', b: null, expected: 'mb' },
     { a: 'na', b: 'nb', expected: 'nan' },
+    // This tests that we can find a key less than the smallest possible integer.
+    { a: null, b: 'aaaaaaaaaaaaaaf', expected: 'aaaaaaaaaaaaaad' },
     { a: 'accccccccccccc', b: 'accccccccccccd', expected: 'acccccccccccccn' },
     { a: 'mz', b: 'na', expected: 'mzn' },
     { a: 'mz', b: 'nb', expected: 'na' },

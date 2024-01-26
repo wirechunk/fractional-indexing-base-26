@@ -3,7 +3,7 @@
 export const digits = 'abcdefghijklmnopqrstuvwxyz';
 const zero = digits[0];
 const integerZero = 'na';
-const smallestInteger = 'a' + digits[0].repeat(13);
+const smallestInteger = 'a'.repeat(14);
 // `a` may be an empty string, `b` is null or a non-empty string.
 // `a < b` lexicographically if `b` is non-null.
 // No trailing zeros are allowed.
@@ -28,10 +28,9 @@ function midpoint(a, b) {
     }
     // The first digits (or lack of digit) are different.
     const digitA = a ? digits.indexOf(a[0]) : 0;
-    const digitB = b !== null ? digits.indexOf(b[0]) : digits.length;
+    const digitB = b ? digits.indexOf(b[0]) : digits.length;
     if (digitB - digitA > 1) {
-        const midDigit = Math.round(0.5 * (digitA + digitB));
-        return digits[midDigit];
+        return digits[Math.round((digitA + digitB) / 2)];
     }
     // The first digits are consecutive.
     if (b && b.length > 1) {
@@ -55,15 +54,9 @@ const getIntegerLength = (head) => {
     }
     throw new Error('invalid order key head: ' + head);
 };
-function validateInteger(int) {
-    if (int.length !== getIntegerLength(int[0])) {
-        throw new Error('invalid integer part of order key: ' + int);
-    }
-}
 const getIntegerPart = (key) => key.slice(0, getIntegerLength(key[0]));
 // Note that this may return null, as there is a largest integer.
 const incrementInteger = (x) => {
-    validateInteger(x);
     const [head, ...digs] = x.split('');
     let carry = true;
     for (let i = digs.length - 1; carry && i >= 0; i--) {
@@ -95,7 +88,6 @@ const incrementInteger = (x) => {
 const z = digits.slice(-1);
 // Note that this may return null, as there is a smallest integer.
 const decrementInteger = (x) => {
-    validateInteger(x);
     const [head, ...digs] = x.split('');
     let borrow = true;
     for (let i = digs.length - 1; borrow && i >= 0; i--) {
